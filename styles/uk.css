@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope&family=Playfair+Display:ital,wght@1,700&display=swap');
+.back {
+    background-color: #23272A;
+}
+
+.boxes {
+    background-color: rgb(99, 99, 99);
+    height: 7.5vw;
+    width: 35%;
+    border-radius: 15px;
+    position: relative;
+    margin: 3vw;
+    left: 60vw;
+    top: 3.5vw;
+    color: white;
+    text-align: center;
+    font-size: 5vw;
+    font-family: 'Manrope', sans-serif;
+    animation: fade-up 2s;
+}
+
+.bigbox {
+    position: absolute;
+    height: 28.5vw;
+    width: 35%;
+    border-radius: 15px;
+    top: 10.101vw;
+    left: 20vw;
+    animation: fade-up 2s;
+    background: url(/images/cloud.png);
+}
+
+.img {
+    position: absolute;
+    height: 45%;
+    transform: translateY(50%);
+}
+
+@keyframes fade-up {
+    0% {
+        opacity: 0;
+        transform: translateY(-20%);
+    }
+    100% {
+        opacity: 1;
+    }
+}
