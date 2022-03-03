@@ -1,0 +1,93 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles/fruit.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+
+<body class="body">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/html/index.html">API's</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/html/uk.html">UK Carbon</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/html/fruit.html">Fruityvice</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Steam</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row height d-flex justify-content-center align-items-center">
+            <div class="col-md-8">
+                <div class="search" id="searchbar"> <i class="fa fa-search"></i> <input type="search" class="form-control" placeholder="Fruit name"> <button class="btn btn-primary">Search</button> </div>
+            </div>
+        </div>
+    </div>
+    <div class="infoBoxGroup1">
+        <div class="infoBox" id="box1"></div>
+        <div class="infoBox" id="box2"></div>
+        <div class="infoBox" id="box3"></div>
+    </div>
+    <div class="infoBoxgroup">
+        <div class="infoBox1" id="box4"></div>
+        <div class="infoBox1" id="box5"></div>
+        <div class="infoBox1" id="box6"></div>
+    </div>
+
+    <script>
+        // addEventListener version
+        const input = document.querySelector('input[type="search"]');
+
+        (function() {
+            var cors_api_host = 'cors-anywhere.herokuapp.com';
+            var cors_api_url = 'https://' + cors_api_host + '/';
+            var slice = [].slice;
+            var origin = window.location.protocol + '//' + window.location.host;
+            var open = XMLHttpRequest.prototype.open;
+            XMLHttpRequest.prototype.open = function() {
+                var args = slice.call(arguments);
+                var targetOrigin = /^https?:\/\/([^\/]+)/i.exec(args[1]);
+                if (targetOrigin && targetOrigin[0].toLowerCase() !== origin &&
+                    targetOrigin[1] !== cors_api_host) {
+                    args[1] = cors_api_url + args[1];
+                }
+                return open.apply(this, args);
+            };
+        })();
+
+        async function load() {
+            let url = 'https://cors-anywhere.herokuapp.com/https://fruityvice.com/api/fruit/' + input.value;
+            let obj = await (await fetch(url)).json();
+            console.log(obj);
+            var box1 = document.getElementById("box1")
+            box1.innerHTML = "Family: " + obj.family
+            var box2 = document.getElementById("box2")
+            box2.innerHTML = "Calories: " + obj.nutritions.calories + "kcal"
+            var box3 = document.getElementById("box3")
+            box3.innerHTML = "Protein: " + obj.nutritions.protein + "g"
+            var box4 = document.getElementById("box4")
+            box4.innerHTML = "Carbs: " + obj.nutritions.carbohydrates + "g"
+            var box5 = document.getElementById("box5")
+            box5.innerHTML = "Fat: " + obj.nutritions.fat + "g"
+            var box6 = document.getElementById("box6")
+            box6.innerHTML = "Sugar: " + obj.nutritions.sugar + "g"
+        }
+
+        input.addEventListener('search', () => {
+            console.log("The term searched for was " + input.value);
+            load();
+
+        })
+    </script>
+</body>
